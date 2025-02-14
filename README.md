@@ -1,100 +1,95 @@
-Guest Account Management for Azure AD
+# Guest Account Management for Azure AD
 
 This repository contains a PowerShell script for automating guest account creation in Azure AD via an Enterprise Application. The solution includes guest invite tracking, SharePoint integration for request management, and automated email notifications.
 
-Features
+## Features
+- ✅ Automated guest user invitation via Azure AD Enterprise Application.  
+- 📊 SharePoint-based tracking for invite approval status.  
+- 📧 Email notifications for invite acceptance, expiration, and reminders.  
+- 🖥️ Front-end interface for request submission and tracking.  
+- ⏳ Auto-expiration of pending invites after **7 days**.  
 
-Automated guest user invitation via Azure AD Enterprise Application.
+---
 
-SharePoint-based tracking for invite approval status.
-
-Email notifications for invite acceptance, expiration, and reminders.
-
-Front-end interface for request submission and tracking.
-
-Auto-expiration of pending invites after 7 days.
-
-Prerequisites
-
+## Prerequisites  
 Ensure you have the following before setting up:
+- An **Azure AD tenant** with permissions to create guest users.
+- A **registered Enterprise Application** in Azure AD.
+- **PowerShell 7+** installed on your local machine.
+- **Microsoft Graph API permissions** for managing guest users.
+- A **configured SharePoint List** for tracking guest requests.
 
-An Azure AD tenant with permissions to create guest users.
+---
 
-A registered Enterprise Application in Azure AD.
+## Setup Instructions  
 
-PowerShell 7+ installed on your local machine.
-
-Microsoft Graph API permissions for managing guest users.
-
-A configured SharePoint List for tracking guest requests.
-
-Setup Instructions
-
-1. Clone the Repository
-
+### 1️⃣ Clone the Repository  
+```sh
 git clone https://github.com/yourusername/guest-account-automation.git
 cd guest-account-automation
 
-2. Configure Azure AD Application
 
-Register a new Enterprise Application in Azure AD.
+## 2️⃣ Configure Azure AD Application  
 
-Assign User.Invite.All, User.ReadWrite.All, and Directory.Read.All API permissions.
-![image](https://github.com/user-attachments/assets/89f4f3d6-1d00-417b-95a7-ca511ee9e46b)
+1. Register a **new Enterprise Application** in **Azure AD**.  
+2. Assign the following **Microsoft Graph API permissions**:  
 
-Create a client secret and note the Application (client) ID, Directory (tenant) ID, and Client Secret.
+   - `User.Invite.All`  
+   - `User.ReadWrite.All`  
+   - `Directory.Read.All`  
 
-Grant admin consent for the application.
+3. **Create a client secret** and note the following values:  
 
-3. Set Up SharePoint List
+   - **Application (client) ID**  
+   - **Directory (tenant) ID**  
+   - **Client Secret**  
 
-Create a new list in SharePoint Online.
+4. Grant **Admin Consent** for the application.  
 
-Add columns:
+---
 
-Guest Email (Single line of text)
+## 3️⃣ Set Up SharePoint List  
 
-Status (Choice: Pending, Accepted, Expired, Cancelled)
+Create a **new list** in **SharePoint Online** and add the following columns:  
 
-Request Date (Date & Time)
+| Column Name      | Type                                         |
+|------------------|---------------------------------------------|
+| **Guest Email**  | Single line of text                        |
+| **Status**       | Choice: Pending, Accepted, Expired, Cancelled |
+| **Request Date** | Date & Time                                 |
 
-4. Configure Environment Variables
+---
 
-Update your PowerShell environment with the required variables:
+## 4️⃣ Configure Environment Variables  
 
+Set up environment variables by adding them to a `.env` file or your PowerShell session:  
+
+```powershell
 $env:AZURE_TENANT_ID = "your-tenant-id"
 $env:AZURE_CLIENT_ID = "your-client-id"
 $env:AZURE_CLIENT_SECRET = "your-client-secret"
 $env:SHAREPOINT_SITE_URL = "https://yourtenant.sharepoint.com/sites/guest-tracking"
 
-5. Run the Script
-
+## 5️⃣ Run the Script
 Execute the script to invite a guest user:
 
+```powershell
 .\invite-guest.ps1 -GuestEmail "guest@example.com"
 
-6. Automate with Azure Function or Logic App (Optional)
-
+## 6️⃣ Automate with Azure Function or Logic App (Optional)
 To run the script automatically:
 
-Deploy it as an Azure Function using a PowerShell runtime.
+- Deploy it as an Azure Function using a PowerShell runtime.
+- Trigger execution based on new SharePoint requests.
+- Use Logic Apps for approval workflows.
 
-Trigger execution based on new SharePoint requests.
+## 🛠 Troubleshooting
+- 🔹 Ensure the Azure AD app has admin consent.
+- 🔹 Check PowerShell execution policies if scripts don’t run.
+- 🔹 Verify SharePoint API permissions if data isn’t updating.
 
-Use Logic Apps for approval workflows.
-
-Troubleshooting
-
-Ensure the Azure AD app has admin consent.
-
-Check PowerShell execution policies if scripts don’t run.
-
-Verify SharePoint API permissions if data isn’t updating.
-
-Contributing
-
+## 🤝 Contributing
 Feel free to fork the repo and submit pull requests for improvements.
 
-License
-
+## 📜 License
 This project is licensed under the MIT License.
