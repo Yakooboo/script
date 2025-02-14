@@ -3,8 +3,20 @@ Connect-MgGraph -Scopes "User.Invite.All", "Mail.Send", "User.Read", "User.ReadW
 
 Write-Output "✅ Conectado correctamente a Microsoft Graph"
 
+# Cargar variables de entorno desde .env
+if (Test-Path ".env") {
+    Get-Content ".env" | ForEach-Object {
+        $name, $value = $_ -split '=', 2
+        Set-Item -Path "Env:\$name" -Value $value
+    }
+    Write-Output "✅ Variables de entorno cargadas"
+} else {
+    Write-Error "❌ Archivo .env no encontrado"
+    exit
+}
+
 # Configuration
-$guestEmail = "giacomoleto@pagegroup.eu"
+$guestEmail = $env:GUEST_EMAIL
 $senderEmail = (Get-MgUser -UserId "me").Mail  # Retrieves the logged-in user's email
 
 Write-Output "📤 Sending invitation from: $senderEmail"
@@ -24,6 +36,7 @@ try {
     Write-Error "❌ ERROR: Failed to create guest invitation: $_"
     exit
 }
+
 # Send a custom email from the authenticated user
 $emailBody = @{
     message = @{
