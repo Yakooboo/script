@@ -40,6 +40,7 @@ cd guest-account-automation
 Register a new Enterprise Application in Azure AD.
 
 Assign User.Invite.All, User.ReadWrite.All, and Directory.Read.All API permissions.
+![image](https://github.com/user-attachments/assets/89f4f3d6-1d00-417b-95a7-ca511ee9e46b)
 
 Create a client secret and note the Application (client) ID, Directory (tenant) ID, and Client Secret.
 
